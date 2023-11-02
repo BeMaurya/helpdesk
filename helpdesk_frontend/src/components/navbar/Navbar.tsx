@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { Role } from "@/enums/Role";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Dropdown } from "react-day-picker";
 
 const Navbar = () => {
   // next router
@@ -39,6 +40,10 @@ const Navbar = () => {
 
   const goToAdminPanel = () => {
     router.push("/admin");
+  };
+
+  const goToDashboard = () => {
+    router.push("/dashboard");
   };
 
   return (
@@ -64,6 +69,10 @@ const Navbar = () => {
               <DropdownMenuItem>
                 My Profile
                 <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={goToDashboard}>
+                Dashboard
+                <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 Account Settings
