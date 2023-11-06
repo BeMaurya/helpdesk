@@ -7,7 +7,7 @@ import bemaurya.helpdesk.entities.concreates.TicketPriority;
 import java.util.List;
 
 public interface TicketPriorityServices {
-    ResultData<List<TicketPriority>> getAll();
-    Result add(String priority);
-    Result delete(long id);
+    ResultData<List<TicketPriority>> getAll(String token);
+    Result add(String token, String priority);
+    Result delete(String token, long id);
 }

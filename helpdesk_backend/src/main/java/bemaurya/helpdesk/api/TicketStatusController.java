@@ -28,22 +28,22 @@ public class TicketStatusController {
     // this is used get all ticket status
     @Operation(summary = "Get all ticket status")
     @GetMapping("/")
-    public ResultData<List<TicketStatus>> getAll() {
-        return ticketStatusServices.getAll();
+    public ResultData<List<TicketStatus>> getAll(@RequestHeader String token) {
+        return ticketStatusServices.getAll(token);
     }
 
     // this is used post new ticket status
     @Operation(summary = "add new ticket status")
     @PostMapping("/")
-    public Result add(@RequestBody TicketStatusRequest request) {
-        return ticketStatusServices.add(request.getStatus());
+    public Result add(@RequestHeader String token, @RequestBody TicketStatusRequest request) {
+        return ticketStatusServices.add(token, request.getStatus());
     }
 
     // this is used delete ticket status
     @Operation(summary = "delete ticket status")
     @DeleteMapping("/{id}")
-    public Result delete(@PathVariable long id) {
-        return ticketStatusServices.delete(id);
+    public Result delete(@RequestHeader String token, @PathVariable long id) {
+        return ticketStatusServices.delete(token, id);
     }
 
 }

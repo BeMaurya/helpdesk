@@ -7,8 +7,8 @@ import bemaurya.helpdesk.entities.concreates.TicketStatus;
 import java.util.List;
 
 public interface TicketStatusServices {
-    ResultData<List<TicketStatus>> getAll();
-    Result add(String status);
-    Result delete(long id);
+    ResultData<List<TicketStatus>> getAll(String token);
+    Result add(String token,String status);
+    Result delete(String token,long id);
 
 }

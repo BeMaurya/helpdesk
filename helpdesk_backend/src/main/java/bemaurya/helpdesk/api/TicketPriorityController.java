@@ -28,22 +28,22 @@ public class TicketPriorityController {
     // this method is used to get all ticket
     @Operation(summary = "Get all ticket priorities")
     @GetMapping("/")
-    public ResultData<List<TicketPriority>> getAll() {
-        return ticketPriorityServices.getAll();
+    public ResultData<List<TicketPriority>> getAll(@RequestHeader String token) {
+        return ticketPriorityServices.getAll(token);
     }
 
     // this method is used add ticket
     @Operation(summary = "Add ticket priority")
     @PostMapping("/")
-    public Result add(@RequestBody TicketPriorityRequest request) {
-        return ticketPriorityServices.add(request.getPriority());
+    public Result add(@RequestHeader String token, @RequestBody TicketPriorityRequest request) {
+        return ticketPriorityServices.add(token,request.getPriority());
     }
 
     // this method is used  delete ticket
     @Operation(summary = "Delete ticket priority")
     @DeleteMapping("/{id}")
-    public Result delete(@PathVariable long id) {
-        return ticketPriorityServices.delete(id);
+    public Result delete(@RequestHeader String token, @PathVariable long id) {
+        return ticketPriorityServices.delete(token,id);
     }
 
 }

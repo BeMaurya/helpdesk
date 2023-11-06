@@ -51,9 +51,15 @@ const TicketDialog = () => {
   });
 
   useEffect(() => {
-    axios.get(TicketPriorityEndpoints.GetAllTicketPriorities).then((res) => {
-      setPriority(res.data.data);
-    });
+    axios
+      .get(TicketPriorityEndpoints.GetAllTicketPriorities, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setPriority(res.data.data);
+      });
   }, []);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
