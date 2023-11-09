@@ -1,5 +1,6 @@
 package bemaurya.helpdesk.business.concreates;
 
+import bemaurya.helpdesk.business.abstracts.ConfigServices;
 import bemaurya.helpdesk.business.abstracts.TicketServices;
 import bemaurya.helpdesk.core.utilities.result.Result;
 import bemaurya.helpdesk.core.utilities.result.ResultData;
@@ -21,11 +22,13 @@ public class TicketManager implements TicketServices {
     // this field injection
     private final TicketDAO ticketDAO;
     private final JwtTokenProvider jwtTokenProvider;
+    private  final ConfigServices configServices;
 
     // constructor injection
-    public TicketManager(TicketDAO ticketDAO, JwtTokenProvider jwtTokenProvider) {
+    public TicketManager(TicketDAO ticketDAO, JwtTokenProvider jwtTokenProvider, ConfigServices configServices) {
         this.ticketDAO = ticketDAO;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.configServices = configServices;
     }
 
 
@@ -156,6 +159,29 @@ public class TicketManager implements TicketServices {
             return new Result(false, "Ticket not added");
         }
         return new Result(true, "Ticket assignee removed");
+    }
+
+    @Override
+    public Result closeTicket(long ticketId, String token) {
+        if (!jwtTokenProvider.validateToken(token)){
+            return new Result(false, "Token is not valid");
+        }
+
+        String role = jwtTokenProvider.getRoleFromToken(token);
+        if (role.equals(RoleEnum.ADMIN.toString()) || role.equals(RoleEnum.SUPPORT.toString())){
+            Ticket ticket = ticketDAO.findById(ticketId).get();
+            TicketStatus ticketStatus = configServices.getDefault(token).getData().getCloseTicketStatus();
+            try {
+                ticket.setStatus(ticketStatus);
+                ticketDAO.save(ticket);
+            }catch (Exception e){
+                return new Result(false, "Ticket not closed");
+            }
+        } else {
+            return new Result(false, "You are not authorized");
+        }
+
+        return new Result(true, "Ticket closed");
     }
 
 }

@@ -27,6 +27,7 @@ export enum TicketEndpoints {
   DeleteTicketById = API_DOMAIN + "/api/ticket/", // Delete Ticket By Id /api/ticket/{id}
   GetTicketsByUserId = API_DOMAIN + "/api/ticket/user/{id}", // Get Ticket By User Id
   RemoveTicketAssignee = API_DOMAIN + "/api/ticket/{ticketId}/assignee/", // Remove Ticket Assignee
+  CloseTicket = API_DOMAIN + "/api/ticket/", // Close ticket
 }
 
 export enum RoleEndpoints {

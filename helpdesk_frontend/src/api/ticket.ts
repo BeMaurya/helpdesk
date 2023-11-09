@@ -32,3 +32,25 @@ export const getTicketById = async (token: string, id: string | string[]) => {
     });
   return res;
 };
+
+// closed ticket status
+export const closedTicket = async (token: string, id: number) => {
+  const res = axios
+    .patch(
+      TicketEndpoints.CloseTicket + id,
+      {},
+      {
+        headers: {
+          token: token,
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.success) {
+        return res.data;
+      } else {
+        return res.data;
+      }
+    });
+  return res;
+};

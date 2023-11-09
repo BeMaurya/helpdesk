@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @CrossOrigin
 @Tag(name = "Ticket status APIs")
 @RestController
@@ -45,5 +46,4 @@ public class TicketStatusController {
     public Result delete(@RequestHeader String token, @PathVariable long id) {
         return ticketStatusServices.delete(token, id);
     }
-
 }

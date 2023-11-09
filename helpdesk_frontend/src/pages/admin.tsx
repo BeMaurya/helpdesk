@@ -441,27 +441,7 @@ const Admin = () => {
                         />
                         <Button type="submit">add ticket status</Button>
                       </form>
-                    </Form>
-                    <h3 className="font-bold mt-5">Add ticket Priority</h3>
-                    <Form {...addTicketStatusForm}>
-                      <form
-                        className="space-y-3"
-                        onSubmit={addTicketStatusForm.handleSubmit(
-                          addTicketStatusFormSubmit
-                        )}>
-                        <FormField
-                          control={addTicketStatusForm.control}
-                          name="status"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Label>Priority</Label>
-                              <Input {...field} placeholder="Priority" />
-                            </FormItem>
-                          )}
-                        />
-                        <Button type="submit">add ticket priority</Button>
-                      </form>
-                    </Form>
+                    </Form> 
                   </div>
                 </CardContent>
               </Card>

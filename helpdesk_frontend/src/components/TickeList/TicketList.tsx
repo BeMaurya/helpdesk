@@ -24,10 +24,11 @@ import {
 import { useAppSelector } from "@/hook/Redux";
 import { User } from "@/types/userType";
 import { getAllSupporters } from "@/api/user";
-import { getAllTickets } from "@/api/ticket";
+import { closedTicket, getAllTickets } from "@/api/ticket";
 import { SearchTypeEnum } from "@/enums/SearchTypeEnum";
 import { useRouter } from "next/router";
 import { Role } from "@/enums/Role";
+import { useToast } from "../ui/use-toast";
 
 interface TicketListProps {
   searchType: SearchTypeEnum;
@@ -37,6 +38,8 @@ interface TicketListProps {
 const TicketList: FC<TicketListProps> = ({ searchType, searchValue }) => {
   // router
   const router = useRouter();
+  // toast
+  const { toast } = useToast();
 
   // state
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -123,6 +126,21 @@ const TicketList: FC<TicketListProps> = ({ searchType, searchValue }) => {
     setCurrentPage(currentPage - 1);
   };
 
+  // close ticket handler
+  const closeTicket = (id: number) => {
+    closedTicket(localStorage.getItem("token") || "", id).then((res) => {
+      if (res) {
+        router.reload();
+      } else {
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          duration: 2000,
+        });
+      }
+    });
+  };
+
   // search ticket
   useEffect(() => {
     const result = tickets.filter((ticket) => {
@@ -153,8 +171,6 @@ const TicketList: FC<TicketListProps> = ({ searchType, searchValue }) => {
     });
     setSearchResult(result);
   }, [searchValue, searchType]);
-
-  // search ticket
 
   // this is the table columns
   const colums: ColumnDef<Ticket>[] = [
@@ -241,8 +257,10 @@ const TicketList: FC<TicketListProps> = ({ searchType, searchValue }) => {
                 )}
                 {(user && user.role === Role.ADMIN.toString()) ||
                 user.role === Role.SUPPORT.toString() ? (
-                  // TODO: add close ticket
-                  <DropdownMenuItem>Close</DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => closeTicket(row.row.getValue("id"))}>
+                    Close
+                  </DropdownMenuItem>
                 ) : null}
               </DropdownMenuGroup>
             </DropdownMenuContent>

@@ -40,6 +40,7 @@ export function TicketTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
+  // state
   const [config, setConfig] = useState<Config | null>(null);
 
   // router

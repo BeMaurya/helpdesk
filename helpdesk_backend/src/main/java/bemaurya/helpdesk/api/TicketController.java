@@ -76,4 +76,11 @@ public class TicketController {
         return ticketServices.removeTickerAssignee(ticketId, token);
     }
 
+    // this method is a patch method and it is close ticket by ticket id
+    @Operation(summary = "close Ticket")
+    @PatchMapping("/{ticketId}")
+    public Result closeTicket(@RequestHeader String token ,@PathVariable long ticketId) {
+        return ticketServices.closeTicket(ticketId, token);
+    }
+
 }
